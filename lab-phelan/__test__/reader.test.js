@@ -1,19 +1,23 @@
 const reader = require(`../lib/reader`);
 
-describe(`Testing suite for fp.js`, () => {
+describe(`Testing suite for reader.js`, () => {
 
-  describe('fp.map()', () => {
+  describe('Testing reader.readTrio()', () => {
 
     test(`+ : "Return first 25 chars of each three files"`, (done) => {
-      reader.readTrio((paths, callback) => {
-        expect(
-          [`../assets/ani.txt`,`../assets/nqu.txt`,`../assets/zzq.txt`], (err)=>console.log(err)
-        ).toEqual([
-          'anianiani anianiani ania',
-          'nqu uqn nqu uqn nqu uqn n',
-          'zzq_zzq_qzz____zzq_zzq_q',
-        ]);
-      });
+      reader(
+        [`${__dirname}/../assets/ani.txt`,
+          `${__dirname}/../assets/nqu.txt`,
+          `${__dirname}/../assets/zzq.txt`,
+        ],
+        (error,data) => {
+          expect(data).toEqual([
+            'anianiani anianiani anian',
+            'nqu uqn nqu uqn nqu uqn n',
+            'zzq_zzq_qzz____zzq_zzq_qz',
+          ]);
+          done();
+        });
     });
 
   });
