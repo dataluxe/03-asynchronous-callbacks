@@ -16,26 +16,26 @@ function readTrio (paths, callback) {
     throw new Error('All elements of <paths> must be strings!');
   }
 
-  //Should add another <throw> block here with a regex for paths - too much work tho.
-
   if (typeof callback !== 'function') {
-    throw new Error(`<callback> must be a function.... iss ${typeof callback}`);
+    throw new TypeError(`<callback> must be a function, in order to provide Jest with an endpoint to test this function! Is: ${typeof callback}`);
   }
+
+  //Should add another <throw> block here with a regex for paths - too much work tho.
 
   paths = paths.map(x=>{return{'path':x, 'text':null};});
   // Map file array out into Object Array - each object has 'path' and 'text'. <text> defaults to null, <path> is the inputted path from the original array.
 
   for (let i=0, len=paths.length; i<len; i++) {
 
-    console.log(`Main 'for' loop started - ${new Date().getTime()}`);//REMOVE-------
+    //console.log(`Main 'for' loop started - ${new Date().getTime()}`);//REMOVE-------
 
     fs.readFile(paths[i].path, (error, data) => {
 
-      console.log(`readFile callback's 'this': ${this}`);
-      console.log(`readFile callback's 'error': ${error}`);
-      console.log(`readFile callback's 'data': ${data}`);
-      console.log(`readFile callback's 'i': ${i}`);
-      console.log(`readFile callback's 'element': ${paths[i]}`);
+      //console.log(`readFile callback's 'this': ${this}`);
+      //console.log(`readFile callback's 'error': ${error}`);
+      //console.log(`readFile callback's 'data': ${data}`);
+      //console.log(`readFile callback's 'i': ${i}`);
+      //console.log(`readFile callback's 'element': ${paths[i]}`);
 
 
       if (error) {
@@ -43,19 +43,19 @@ function readTrio (paths, callback) {
         return; //First of two exit points for this function - remember, this function should return <undefined>, as this expression will.
       }
 
-      console.log(`File ${i} succesfully read! Characters returned: ${data.length}`);//REMOVE-------
+      //console.log(`File ${i} succesfully read! Characters returned: ${data.length}`);//REMOVE-------
 
       paths[i].text = data.toString('UTF-8', 0, 25);
 
-      console.log(`paths[${i}].text - ${paths[i].text}`);
-      console.log(`paths: ${paths}`);
+      //console.log(`paths[${i}].text - ${paths[i].text}`);
+      //console.log(`paths: ${paths}`);
 
       if (paths.filter(x=>{return x.text===null;}).length === 0) callback(null, paths.map(x=>{return x.text;}));
 
       return; //Second of two exit points from this function - will also return 'undefined' as required.
     });
 
-    console.log(`Main 'for' loop completed - ${new Date().getTime()}`);//REMOVE-------
+    //console.log(`Main 'for' loop completed - ${new Date().getTime()}`);//REMOVE-------
 
   }
 
